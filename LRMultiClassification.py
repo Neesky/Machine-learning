@@ -115,17 +115,17 @@ class LRMultiClassificationMP(LogisticRegressionMP):
         print(y,y_)
         acc = np.mean(y==y_)
         print("测试集最终acc:{}".format(acc))
+if __name__ == "__main__":
+    LRM = LRMultiClassificationMP()
+    X,y = LRM.load_data(r'./iris.csv',shuffle = True)
+    X_train,y_train,X_test,y_test = LRM.splitData(X,y)
+    X_train1,y_train1 = LRM.processData0_no0(X,y)
+    X_train2,y_train2 = LRM.processData1_2(X,y)
 
-LRM = LRMultiClassificationMP()
-X,y = LRM.load_data(r'./iris.csv',shuffle = True)
-X_train,y_train,X_test,y_test = LRM.splitData(X,y)
-X_train1,y_train1 = LRM.processData0_no0(X,y)
-X_train2,y_train2 = LRM.processData1_2(X,y)
+    LR1 = LogisticRegressionMP(lr=0.01,max_iter=3000,weight_decay = True)
+    LR1.train(X_train1,y_train1)
+    LR2 = LogisticRegressionMP(lr=0.01,max_iter=3000,weight_decay = True)
+    LR2.train(X_train2,y_train2)
 
-LR1 = LogisticRegressionMP(lr=0.01,max_iter=3000,weight_decay = True)
-LR1.train(X_train1,y_train1)
-LR2 = LogisticRegressionMP(lr=0.01,max_iter=3000,weight_decay = True)
-LR2.train(X_train2,y_train2)
-
-LRM.predict(LR1,LR2,X_test,y_test)
+    LRM.predict(LR1,LR2,X_test,y_test)
 
