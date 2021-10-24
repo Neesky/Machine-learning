@@ -2,7 +2,7 @@
 *.tcl
 *.jou
 Vivado/Lab_04.sim
-
+__pycache__/
 /gradle/wrapper/gradle-wrapper.properties
 ##----------Android----------
 # build
