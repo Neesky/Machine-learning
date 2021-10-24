@@ -1,4 +1,3 @@
-# 固定种子
 import warnings
 
 import numpy as np
@@ -6,7 +5,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import time
 import warnings
-class LogisticRegression(object):
+
+class LogisticRegressionMP(object):
 
     def __init__(self, lr=0.1, max_iter=100, seed=None, weight_decay=True,minlr = 0.0001):
         if(seed != None):
@@ -52,7 +52,7 @@ class LogisticRegression(object):
         acc = np.mean([1 if ((y_[i]>=0.5 and y[i]==1) or (y_[i]<0.5 and y[i]==0)) else 0 for i in range(len(y))])
         return acc
     def splitData(self,X,y,ratio=0.7):
-        num = int(len(y)*0.7)
+        num = int(len(y)*ratio)
         X_train = X[0:num]
         y_train = y[0:num]
         X_test = X[num:]
@@ -98,8 +98,8 @@ class LogisticRegression(object):
         acc = self.cal_acc(y, y_)
         print("acc:{}".format(acc))
 if __name__ == "__main__":
-    LR = LogisticRegression(lr=0.1,max_iter=3000,weight_decay = True)
+    LR = LogisticRegressionMP(lr=0.1,max_iter=3000,weight_decay = True)
     X,y = LR.load_data(r'./Watermelon_data.xls',shuffle = True)
     X_train,y_train,X_test,y_test = LR.splitData(X,y)
-    LR.train(X_train,y_train,draw = ["loss","acc","draw"])
+    LR.train(X_train,y_train,draw = ["loss","acc"])
     LR.predict(X_test,y_test)
