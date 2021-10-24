@@ -94,7 +94,7 @@ class LRMultiClassificationMP(LogisticRegressionMP):
 
         y_ = np.zeros(len(y),dtype=np.int)
 
-        y_predict1 = LR1.cal_y_predict(X)
+        y_predict1 = LR1._cal_y_predict(X)
 
         index2 = []
         X_train2 = []
@@ -106,13 +106,12 @@ class LRMultiClassificationMP(LogisticRegressionMP):
                 index2.append(i)
                 X_train2.append(X[i])
 
-        y_predict2 = LR2.cal_y_predict(np.array(X_train2).astype(np.float))
+        y_predict2 = LR2._cal_y_predict(np.array(X_train2).astype(np.float))
         for i in range(len(y_predict2)):
             if (y_predict2[i] < 0.5):
                 y_[index2[i]] = 1
             else:
                 y_[index2[i]] = 2
-        print(y,y_)
         acc = np.mean(y==y_)
         print("测试集最终acc:{}".format(acc))
 if __name__ == "__main__":
